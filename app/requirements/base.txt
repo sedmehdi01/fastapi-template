@@ -1,0 +1,19 @@
+fastapi
+uvicorn
+
+# for Form fastapi
+python-multipart
+
+# for jwt token
+python-jose
+passlib[bcrypt]
+
+# for models
+pydantic
+
+# for async pymongo
+motor
+
+python-dotenv
+
+redis

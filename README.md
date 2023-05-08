@@ -53,8 +53,8 @@ This section lists every major framework/library used in the project:
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Create structure folders and files
-- [ ] Connection to databases
+- [x] Create structure folders and files
+- [x] Connection to databases
 - [ ] Add authentication with jwt
 - [ ] Add route login
 - [ ] Add basic RBAC (Role base access control)
@@ -81,7 +81,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 Email: smmhosseini.shahed@gmail.com
 
 Telegram: https:/t.me/sedmehdihosseini
-
 
 <!-- Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name) -->
 
