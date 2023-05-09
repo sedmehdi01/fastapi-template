@@ -55,8 +55,8 @@ This section lists every major framework/library used in the project:
 
 - [x] Create structure folders and files
 - [x] Connection to databases
-- [ ] Add authentication with jwt
-- [ ] Add route login
+- [x] Add authentication with jwt
+- [x] Add route login and sign up sample for test
 - [ ] Add basic RBAC (Role base access control)
 - [ ] Add route for edit profile
 - [ ] Add route create account for user role

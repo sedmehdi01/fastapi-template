@@ -1,6 +1,6 @@
-from .redis import redis_db
+from .redis import get_redis_client
 from .mongo import (
-    AsyncIOMotorClient,
+    AgnosticDatabase,
     get_mongo_database,
     connect_to_mongo,
     close_mongo_connection,

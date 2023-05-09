@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, Response
 from config import settings
 
-# from api.router import api_router
+from api.v1.views import router
 from starlette.middleware.cors import CORSMiddleware
 from db import (
     close_mongo_connection,
@@ -49,7 +49,7 @@ app.add_event_handler("shutdown", close_mongo_connection)
 
 
 # api router
-# app.include_router(api_router)
+app.include_router(router)
 
 # TODO authentication
 # for static file (media)
