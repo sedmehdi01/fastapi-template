@@ -1,5 +1,5 @@
 from pydantic import Field, BaseModel
-from typing import Optional
+from auth.role_schema import RoleEnum
 
 from core.common_schema import Response
 
@@ -7,6 +7,10 @@ from core.common_schema import Response
 class LoginPayload(BaseModel):
     username: str = Field(max_length=63)
     password: str = Field(max_length=63)
+
+
+class CreateAccountPayload(LoginPayload):
+    role: RoleEnum
 
 
 class Token(Response):

@@ -1,7 +1,7 @@
 from datetime import timedelta
 from uuid import UUID
 from redis.asyncio import Redis
-from .common_schema import TokenType
+from core.common_schema import TokenType
 
 # from app.models.user_model import User
 
