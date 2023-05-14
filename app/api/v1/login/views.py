@@ -3,9 +3,8 @@ from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
 from auth.role_schema import RoleEnum
-from auth.jwt_schema import DataJWT
 from config import settings
-from core.user_model import User
+from core.user_model import UserBase, UserCreate
 from .schema import LoginPayload, Token, CreateAccountPayload
 from core.common_schema import TokenType
 from auth.token import get_valid_tokens, add_token_to_redis
@@ -38,9 +37,9 @@ async def login(
     if not verify_password(data.password, user["hashed_password"]):
         return HTTPException(status_code=401, detail="Username or Password incorrect")
 
-    print(user["role"])
-    data_jwt = DataJWT(
+    data_jwt = UserBase(
         user_id=str(user["_id"]),
+        username=data.username,
         role=RoleEnum(user["role"]),
     )
 
@@ -100,8 +99,9 @@ async def login(
         return HTTPException(status_code=401, detail="Username or Password incorrect")
 
     print(user["role"])
-    data_jwt = DataJWT(
+    data_jwt = UserBase(
         user_id=str(user["_id"]),
+        username=data.username,
         role=RoleEnum(user["role"]),
     )
 
@@ -168,7 +168,7 @@ async def create_user(
     if await mongo_client.users.find_one({"username": data.username}):
         raise HTTPException(status_code=400, detail="Username already exists")
 
-    user = User(
+    user = UserCreate(
         username=data.username,
         hashed_password=get_password_hash(data.password),
         role=data.role,
@@ -177,9 +177,10 @@ async def create_user(
     user = await mongo_client.users.insert_one(user.dict())
     user_id = str(user.inserted_id)
 
-    data_jwt = DataJWT(
-        user_id=user_id,
-        role=data.role,
+    data_jwt = UserBase(
+        user_id=str(user["_id"]),
+        username=data.username,
+        role=RoleEnum(user["role"]),
     )
 
     access_token = create_access_token(data_jwt)

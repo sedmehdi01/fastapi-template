@@ -2,7 +2,8 @@ from datetime import datetime, timedelta
 
 from passlib.context import CryptContext
 from jose import jwt
-from .jwt_schema import DataJWT
+
+from core.user_model import UserBase
 
 
 from config import settings
@@ -18,7 +19,7 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-def create_access_token(data_jwt: DataJWT, expires_delta: timedelta = None) -> str:
+def create_access_token(data_jwt: UserBase, expires_delta: timedelta = None) -> str:
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
@@ -33,7 +34,7 @@ def create_access_token(data_jwt: DataJWT, expires_delta: timedelta = None) -> s
     return encoded_jwt
 
 
-def create_refresh_token(data_jwt: DataJWT, expires_delta: timedelta = None) -> str:
+def create_refresh_token(data_jwt: UserBase, expires_delta: timedelta = None) -> str:
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:

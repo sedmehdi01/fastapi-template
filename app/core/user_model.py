@@ -4,7 +4,9 @@ from auth.role_schema import RoleEnum
 
 
 class UserBase(BaseModel):
+    user_id: str
     username: str
+    role: RoleEnum
     # first_name: str
     # last_name: str
     # email: EmailStr = Field(
@@ -26,7 +28,8 @@ class UserBase(BaseModel):
     # address: str | None
 
 
-class User(UserBase):
+class UserCreate(BaseModel):
+    username: str
     hashed_password: str | None = Field(nullable=False, index=True)
     role: RoleEnum
     # groups: list["Group"] = Relationship(  # noqa: F821

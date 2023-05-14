@@ -1,41 +1,44 @@
+from bson import ObjectId
 from fastapi import APIRouter, Body, Depends, HTTPException
-from auth.role_schema import RoleEnum
 from auth.deps import get_current_user
+from db import get_mongo_database, AgnosticDatabase
+from core.user_model import UserBase
+from .schema import Profile
 
-from core.user_model import User
 
 router = APIRouter()
 
 
-@router.get("/info/")
+@router.get("/", response_model=Profile)
 async def get_info(
-    current_user: User = Depends(get_current_user()),
+    current_user: UserBase = Depends(get_current_user()),
+    mongo_client: AgnosticDatabase = Depends(get_mongo_database),
 ):
     """
-    Test for info all access
+    Get info current user
     """
-    return current_user
+
+    data = await mongo_client.users.find_one({"_id": ObjectId(current_user.user_id)})
+    del data["_id"]
+
+    return data
 
 
-@router.get("/admin-access/")
-async def admin_access(
-    current_user: User = Depends(get_current_user(required_roles=[RoleEnum.admin])),
+@router.post("/", response_model=Profile)
+async def update_info(
+    payload: Profile,
+    current_user: UserBase = Depends(get_current_user()),
+    mongo_client: AgnosticDatabase = Depends(get_mongo_database),
 ):
     """
-    Test for admin access
+    Get info current user
     """
-    return current_user
 
+    await mongo_client.users.update_one(
+        {"_id": ObjectId(current_user.user_id)}, {"$set": payload.dict()}
+    )
 
-@router.get("/all-except-user/")
-async def except_user(
-    current_user: User = Depends(
-        get_current_user(
-            required_roles=[RoleEnum.admin, RoleEnum.manager, RoleEnum.support]
-        )
-    ),
-):
-    """
-    Test for all except user access
-    """
-    return current_user
+    data = await mongo_client.users.find_one({"_id": ObjectId(current_user.user_id)})
+    del data["_id"]
+
+    return data

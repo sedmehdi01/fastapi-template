@@ -58,8 +58,8 @@ This section lists every major framework/library used in the project:
 - [x] Add authentication with jwt
 - [x] Add route login and sign up sample for test
 - [x] Add basic RBAC (Role base access control)
-- [ ] Add route for edit profile
-- [ ] Add route create account for user role
+- [x] Add route for edit profile
+- [ ] Add route sign up with email for user role
 - [ ] Add route manage users for admin role
 - [ ] Add Pagination
 - [ ] Add some template routes for all methods

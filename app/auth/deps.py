@@ -5,7 +5,7 @@ from jose import jwt, JWTError
 from pydantic import ValidationError
 
 from config import settings
-from core.user_model import User
+from core.user_model import UserBase
 from db.redis import get_redis_client
 from auth.token import get_valid_tokens
 from core.common_schema import TokenType
@@ -13,11 +13,11 @@ from core.common_schema import TokenType
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login-docs/")
 
 
-def get_current_user(required_roles: list[str] = None) -> User:
+def get_current_user(required_roles: list[str] = None) -> UserBase:
     async def current_user(
         token: str = Depends(reusable_oauth2),
         redis_client: Redis = Depends(get_redis_client),
-    ) -> User:
+    ) -> UserBase:
         try:
             payload = jwt.decode(
                 token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
@@ -56,6 +56,10 @@ def get_current_user(required_roles: list[str] = None) -> User:
                     detail=f"""Access denied!""",
                 )
 
-        return payload
+        return UserBase(
+            user_id=user_id,
+            username=payload["username"],
+            role=payload["role"],
+        )
 
     return current_user
