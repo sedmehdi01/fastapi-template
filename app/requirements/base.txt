@@ -17,3 +17,6 @@ motor
 python-dotenv
 
 redis
+
+# for email signup
+fastapi-mail

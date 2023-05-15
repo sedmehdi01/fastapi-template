@@ -18,6 +18,14 @@ class Settings(BaseSettings):
     MONGODB_DB_NAME: str
     REDIS_URI: str
 
+    # Email credential
+    MAIL_USERNAME: str
+    MAIL_PASSWORD: str
+    MAIL_FROM: str
+    MAIL_PORT: int
+    MAIL_SERVER: str
+    MAIL_FROM_NAME: str
+
     HOST: str
     PORT: int
 

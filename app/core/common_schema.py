@@ -1,5 +1,4 @@
-from uuid import UUID
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 from enum import Enum
 
 
@@ -10,3 +9,10 @@ class TokenType(str, Enum):
 
 class Response(BaseModel):
     message: str
+
+
+class Token(Response):
+    access_token: str
+    token_type: str
+    refresh_token: str
+    user_id: str

@@ -24,7 +24,7 @@ async def get_info(
     return data
 
 
-@router.post("/", response_model=Profile)
+@router.put("/", response_model=Profile)
 async def update_info(
     payload: Profile,
     current_user: UserBase = Depends(get_current_user()),
