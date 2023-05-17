@@ -7,7 +7,7 @@ from auth.role_schema import RoleEnum
 from db import get_mongo_database, AgnosticDatabase, get_redis_client
 from core.user_model import UserBase
 from .schema import SendEmailCodeSchema, VerifyEmailSchema
-from api.v1.signup.email_smtp import (
+from api.signup.email_smtp import (
     send_email_async,
     send_email_background,
     verify_code,

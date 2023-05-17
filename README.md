@@ -60,8 +60,8 @@ This section lists every major framework/library used in the project:
 - [x] Add basic RBAC (Role base access control)
 - [x] Add route for edit profile
 - [x] Add route sign up with email for user role
-- [ ] Add Exception model and show on docs
 - [ ] Add route manage users for admin role
+- [ ] Add Exception model and show on docs
 - [ ] Add Pagination
 - [ ] Add some template routes for all methods
 - [ ] Add sample to upload files and save it on mongo

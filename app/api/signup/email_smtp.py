@@ -15,7 +15,7 @@ conf = ConnectionConfig(
     MAIL_STARTTLS=True,
     MAIL_SSL_TLS=False,
     USE_CREDENTIALS=True,
-    TEMPLATE_FOLDER="./api/v1/signup/",
+    TEMPLATE_FOLDER="./api/signup/",
 )
 
 

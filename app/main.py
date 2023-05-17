@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, Response
 from config import settings
 
-from api.v1.views import router
+from api.views import router
 from starlette.middleware.cors import CORSMiddleware
 from db import (
     close_mongo_connection,
