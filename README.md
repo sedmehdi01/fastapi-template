@@ -61,10 +61,12 @@ This section lists every major framework/library used in the project:
 - [x] Add route for edit profile
 - [x] Add route sign up with email for user role
 - [ ] Add route manage users for admin role
+- [ ] Add route logout
 - [ ] Add Exception model and show on docs
 - [ ] Add Pagination
 - [ ] Add some template routes for all methods
 - [ ] Add sample to upload files and save it on mongo
+- [ ] Add set pic profile
 - [ ] Add docker files
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

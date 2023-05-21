@@ -1,19 +1,19 @@
 from fastapi import APIRouter, Body, Depends, HTTPException
-from auth.role_schema import RoleEnum
-from auth.deps import get_current_user
+from auth import RoleEnum, get_current_user
 
 from core.user_model import UserBase
+from core.common_schema import PaginationModel, PaginationResponse
 from db import get_mongo_database, AgnosticDatabase
-from core.utils import obj_to_str
+from core.pagination import MongoDBPagination
 
 router = APIRouter()
 
-@router.get("/")
+
+@router.post("/", response_model=PaginationResponse)
 async def get_list_of_users(
+    payload: PaginationModel,
     current_user: UserBase = Depends(
-        get_current_user(
-            required_roles=[RoleEnum.admin, RoleEnum.manager]
-        )
+        get_current_user(required_roles=[RoleEnum.admin, RoleEnum.manager])
     ),
     mongo_client: AgnosticDatabase = Depends(get_mongo_database),
 ):
@@ -21,9 +21,13 @@ async def get_list_of_users(
     Return all users
     """
 
-    users = list()
-    async for user in mongo_client.users.find():
-        print(user)
-        users.append(user)
+    pagination = MongoDBPagination(
+        mongo_client.users,
+        payload.page,
+        payload.limit,
+        payload.filters,
+        payload.sorted_by,
+        payload.order_by,
+    )
 
-    return obj_to_str(users)
+    return await pagination.response_pagination()

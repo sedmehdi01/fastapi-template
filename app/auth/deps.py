@@ -8,7 +8,7 @@ from config import settings
 from core.user_model import UserBase
 from db.redis import get_redis_client
 from auth.token import get_valid_tokens
-from core.common_schema import TokenType
+from auth.schemas import TokenType
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login-docs/")
 

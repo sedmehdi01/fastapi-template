@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Body, Depends, HTTPException
-from auth.role_schema import RoleEnum
-from auth.deps import get_current_user
+from auth import RoleEnum, get_current_user
 
 from core.user_model import UserBase
 

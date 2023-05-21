@@ -1,5 +1,5 @@
 from pydantic import Field, BaseModel
-from auth.role_schema import RoleEnum
+from auth import RoleEnum
 
 
 class LoginPayload(BaseModel):

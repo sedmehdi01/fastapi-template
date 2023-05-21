@@ -1,6 +1,6 @@
 from bson import ObjectId
 from fastapi import APIRouter, Body, Depends, HTTPException
-from auth.deps import get_current_user
+from auth import get_current_user
 from db import get_mongo_database, AgnosticDatabase
 from core.user_model import UserBase
 from .schema import Profile

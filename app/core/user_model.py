@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from auth.role_schema import RoleEnum
+from auth.schemas import RoleEnum
 
 
 class UserBase(BaseModel):
@@ -32,21 +32,3 @@ class UserCreate(BaseModel):
     username: str
     hashed_password: str | None = Field(nullable=False, index=True)
     role: RoleEnum
-    # groups: list["Group"] = Relationship(  # noqa: F821
-    #     back_populates="users",
-    #     link_model=LinkGroupUser,
-    #     sa_relationship_kwargs={"lazy": "selectin"},
-    # )
-    # image_id: UUID | None = Field(default=None, foreign_key="ImageMedia.id")
-    # image: ImageMedia = Relationship(
-    #     sa_relationship_kwargs={
-    #         "lazy": "joined",
-    #         "primaryjoin": "User.image_id==ImageMedia.id",
-    #     }
-    # )
-    # follower_count: int | None = Field(
-    #     sa_column=Column(BigInteger(), server_default="0")
-    # )
-    # following_count: int | None = Field(
-    #     sa_column=Column(BigInteger(), server_default="0")
-    # )

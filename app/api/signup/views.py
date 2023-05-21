@@ -3,7 +3,7 @@ from fastapi import BackgroundTasks
 from redis.asyncio import Redis
 
 from config import settings
-from auth.role_schema import RoleEnum
+from auth import RoleEnum, TokenType, Token
 from db import get_mongo_database, AgnosticDatabase, get_redis_client
 from core.user_model import UserBase
 from .schema import SendEmailCodeSchema, VerifyEmailSchema
@@ -18,12 +18,11 @@ from auth.security import (
     create_refresh_token,
 )
 from auth.token import get_valid_tokens, add_token_to_redis
-from core.common_schema import TokenType, Token, Response
 
 router = APIRouter()
 
 
-@router.post("/send-email-code/", response_model=Response)
+@router.post("/send-email-code/")
 async def send_sms_code(
     payload: SendEmailCodeSchema = Body(...),
 ):
@@ -34,7 +33,7 @@ async def send_sms_code(
     return {"message": "Code sent"}
 
 
-@router.post("/send-email-code-background/", response_model=Response)
+@router.post("/send-email-code-background/")
 async def send_email_background_tasks(
     background_tasks: BackgroundTasks,
     payload: SendEmailCodeSchema = Body(...),
@@ -114,7 +113,6 @@ async def verify_email(
         token_type="bearer",
         refresh_token=refresh_token,
         user_id=user_id,
-        message="Create User Successful",
     )
 
     return response

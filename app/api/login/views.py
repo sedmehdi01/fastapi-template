@@ -2,11 +2,10 @@ from redis.asyncio import Redis
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
-from auth.role_schema import RoleEnum
+from auth import RoleEnum, TokenType, Token
 from config import settings
 from core.user_model import UserBase, UserCreate
 from .schema import LoginPayload, CreateAccountPayload
-from core.common_schema import TokenType, Token
 from auth.token import get_valid_tokens, add_token_to_redis
 from db import get_redis_client, get_mongo_database, AgnosticDatabase
 from auth.security import (
@@ -74,7 +73,6 @@ async def login(
         token_type="bearer",
         refresh_token=refresh_token,
         user_id=str(user["_id"]),
-        message="Login Successful",
     )
 
     return response
@@ -98,7 +96,6 @@ async def login(
     if not verify_password(data.password, user["hashed_password"]):
         return HTTPException(status_code=401, detail="Username or Password incorrect")
 
-    print(user["role"])
     data_jwt = UserBase(
         user_id=str(user["_id"]),
         username=data.username,
@@ -136,7 +133,6 @@ async def login(
         token_type="bearer",
         refresh_token=refresh_token,
         user_id=str(user["_id"]),
-        message="Login Successful",
     )
 
     return response
@@ -214,7 +210,6 @@ async def create_user(
         token_type="bearer",
         refresh_token=refresh_token,
         user_id=user_id,
-        message="Create User Successful",
     )
 
     return response
